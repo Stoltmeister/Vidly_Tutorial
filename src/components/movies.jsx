@@ -4,7 +4,6 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import MoviesTable from "./moviesTable";
 import ListGroup from "./common/listGroup";
-import PropTypes from "prop-types";
 import { getGenres } from "../services/fakeGenreService";
 import _ from "lodash";
 
@@ -43,14 +42,7 @@ class Movies extends Component {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
-  handleSort = path => {
-    const sortCoulumn = { ...this.state.sortCoulumn };
-    if (sortCoulumn.path === path)
-      sortCoulumn.order = sortCoulumn.order === "asc" ? "desc" : "asc";
-    else {
-      sortCoulumn.path = path;
-      sortCoulumn.order = "asc";
-    }
+  handleSort = sortCoulumn => {
     this.setState({ sortCoulumn });
   };
 
@@ -88,6 +80,7 @@ class Movies extends Component {
           <p>Showing {filtered.length} movies in the database.</p>
           <MoviesTable
             movies={movies}
+            sortCoulumn={sortCoulumn}
             onLike={this.handleLike}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
